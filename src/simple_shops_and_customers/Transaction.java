@@ -5,7 +5,6 @@ public class Transaction {
     private int transactionID;
     private int customerID;
     private AccountType customerAccount;
-    private int shopID;
     private TransactionType type;
     private String productIdentifier;
     private Double amount;
@@ -23,7 +22,6 @@ public class Transaction {
         this.transactionID = transactionID;
         this.customerID = customer.getID();
         this.customerAccount = customerAccount;
-        this.shopID = shop.getID();
         this.type = transactionType;
         this.productIdentifier = product.getIdentifier();
         this.amount = product.getRetailPrice();
@@ -53,4 +51,31 @@ public class Transaction {
 
     }
 
+    public int getID(){
+        return this.transactionID;
+    }
+
+    public int getCustomerID(){
+        return this.customerID;
+    }
+
+    public AccountType getCustomerAccount(){
+        return this.customerAccount;
+    }
+
+    private TransactionType getType(){
+        return this.type;
+    }
+
+    private String getProductIdentifier(){
+        return this.productIdentifier;
+    }
+
+    private Double getAmount(){
+        return this.amount;
+    }
+
+    private Boolean getCompleted(){
+        return this.completed;
+    }
 }

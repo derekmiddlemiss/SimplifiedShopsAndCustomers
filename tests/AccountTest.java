@@ -58,6 +58,24 @@ public class AccountTest {
     }
 
     @Test
+    public void testBooleanResponseDebit__Allowed(){
+        Boolean response = creditCardLowLimit.debit( 30.0, "1234" );
+        assertTrue( response );
+    }
+
+    @Test
+    public void testBooleanResponseDebit__NotAllowed(){
+        Boolean response = creditCardLowLimit.debit( 200.0, "1234" );
+        assertFalse( response );
+    }
+
+    @Test
+    public void testBooleanResponseDebit__WrongPin(){
+        Boolean response = creditCardLowLimit.debit( 30.0, "2134" );
+        assertFalse( response );
+    }
+
+    @Test
     public void testCredit(){
         creditCardLowLimit.debit( 30.0, "1234" );
         creditCardLowLimit.credit( 50.0 );

@@ -3,8 +3,10 @@ package simple_shops_and_customers;
 public class Shop {
 
     private int shopID;
+    private int transactionIDCounter;
     private String name;
     private ProductList products;
+    private TransactionMap transactions;
     private Double current;
     private Double sales;
     private Double refunds;
@@ -17,11 +19,41 @@ public class Shop {
             Double refunds
     ) {
         this.shopID = shopID;
+        this.transactionIDCounter = 1;
         this.name = name;
         this.products = new ProductList();
+        this.transactions = new TransactionMap();
         this.current = current;
         this.sales = sales;
         this.refunds = refunds;
+    }
+
+    public void sellProduct( Product product, Customer customer, AccountType customerAccount, String pin ){
+        Transaction sellProduct = new Transaction(
+                transactionIDCounter,
+                customer,
+                customerAccount,
+                pin,
+                this,
+                TransactionType.SALE,
+                product
+        );
+        this.transactions.storeTransaction( sellProduct );
+        transactionIDCounter++;
+    }
+
+    public void refundProduct( Product product, Customer customer, AccountType customerAccount, String pin ){
+        Transaction refundProduct = new Transaction(
+                transactionIDCounter,
+                customer,
+                customerAccount,
+                pin,
+                this,
+                TransactionType.REFUND,
+                product
+        );
+        this.transactions.storeTransaction( refundProduct );
+        transactionIDCounter++;
     }
 
     public int getID(){
@@ -42,6 +74,10 @@ public class Shop {
 
     public Double getRefunds(){
         return this.refunds;
+    }
+
+    public int getNumberOfTransactions() {
+        return this.transactions.numberOfTransactions();
     }
 
     public void receiveProduct( Product product ){
