@@ -17,13 +17,15 @@ public class AccountMapTest {
                 AccountType.CREDITCARD,
                 "Frank Mitty, Number 3434676784841212",
                 0.0,
-                -100.0
+                -100.0,
+                "1234"
         );
         debitCard = new Account(
                 AccountType.DEBITCARD,
                 "Mitt Franky, Number 1234123456785678",
                 0.0,
-                -200.0
+                -200.0,
+                "1234"
         );
     }
 

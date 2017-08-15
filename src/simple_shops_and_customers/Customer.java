@@ -25,10 +25,10 @@ public class Customer {
         return this.name;
     }
 
-    public void receiveProduct(Product product, AccountType accountType) {
+    public void receiveProduct(Product product, AccountType accountType, String pin ) {
         if ( product != null ) {
             this.products.storeProduct(product);
-            this.accounts.getAccount(accountType).debit(product.getRetailPrice());
+            this.accounts.getAccount(accountType).debit(product.getRetailPrice(),pin);
         }
     }
 
@@ -57,8 +57,8 @@ public class Customer {
         this.accounts.addAccount( account );
     }
 
-    public Double getBalance( AccountType accountType ){
-        return this.accounts.getAccount( accountType ).getBalance();
+    public Double getBalance( AccountType accountType, String pin ){
+        return this.accounts.getAccount( accountType ).getBalance( pin );
     }
 
 

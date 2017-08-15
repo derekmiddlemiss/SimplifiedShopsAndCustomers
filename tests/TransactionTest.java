@@ -23,7 +23,8 @@ public class TransactionTest {
                 AccountType.CREDITCARD,
                 "Frank Mitty 1122334455667788",
                 0.0,
-                -1000.0
+                -1000.0,
+                "1234"
         );
         bookShop = new Shop(
                 1,
@@ -52,6 +53,7 @@ public class TransactionTest {
                 1,
                 frank,
                 AccountType.CREDITCARD,
+                "1234",
                 bookShop,
                 TransactionType.SALE,
                 lotr);
@@ -59,7 +61,7 @@ public class TransactionTest {
         assertTrue( frank.productInStore( lotr ) );
         assertFalse( bookShop.productInStore( lotr ) );
         assertEquals( 12.00, bookShop.getSales(), 0.001);
-        assertEquals( -12.00, frank.getBalance( AccountType.CREDITCARD ), 0.001 );
+        assertEquals( -12.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
     }
 
     @Test
@@ -68,6 +70,7 @@ public class TransactionTest {
                 1,
                 frank,
                 AccountType.CREDITCARD,
+                "1234",
                 bookShop,
                 TransactionType.SALE,
                 lotr
@@ -79,6 +82,7 @@ public class TransactionTest {
                 2,
                 frank,
                 AccountType.CREDITCARD,
+                "1234",
                 bookShop,
                 TransactionType.REFUND,
                 lotr
@@ -87,7 +91,7 @@ public class TransactionTest {
         assertTrue( bookShop.productInStore( lotr ) );
         assertEquals( 12.00, bookShop.getSales(), 0.001 );
         assertEquals( -12.00, bookShop.getRefunds(), 0.001 );
-        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD ), 0.001 );
+        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
     }
 
 }

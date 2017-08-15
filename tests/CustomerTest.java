@@ -21,7 +21,8 @@ public class CustomerTest {
                 AccountType.CREDITCARD,
                 "Frank Mitty 1122334455667788",
                 0.0,
-                -1000.0
+                -1000.0,
+                "1234"
         );
         lotr = new Product(
                 "LordOfTheRings113344",
@@ -50,60 +51,60 @@ public class CustomerTest {
     @Test
     public void testAddAccount(){
         frank.addAccount( creditCard );
-        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD ), 0.001 );
+        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
     }
 
     @Test
     public void testProductInStore__True(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         assertTrue( frank.productInStore( lotr ) );
     }
 
     @Test
     public void testProductInStore__False(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         assertFalse( frank.productInStore( ofotcn ) );
     }
 
     @Test
     public void testNumberProductsInStore(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
-        frank.receiveProduct( ofotcn, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
+        frank.receiveProduct( ofotcn, AccountType.CREDITCARD, "1234" );
         assertEquals( 2, frank.numberProductsInStore() );
     }
 
     @Test
     public void testReceiveProduct(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         assertTrue( frank.productInStore( lotr ) );
-        assertEquals( -12.00, frank.getBalance( AccountType.CREDITCARD ), 0.001 );
+        assertEquals( -12.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
     }
 
     @Test
     public void testReceiveProduct__Null(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( null, AccountType.CREDITCARD );
+        frank.receiveProduct( null, AccountType.CREDITCARD, "1234" );
         assertEquals( 0, frank.numberProductsInStore() );
     }
 
     @Test
     public void testProvideProduct(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         Product providedProduct = frank.provideProduct( lotr, AccountType.CREDITCARD );
         assertFalse( frank.productInStore( lotr ) );
         assertEquals( providedProduct, lotr );
-        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD ), 0.001 );
+        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
     }
 
     @Test
     public void testProvideProduct__Null(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         Product providedProduct = frank.provideProduct( null, AccountType.CREDITCARD );
         assertNull( providedProduct );
     }
@@ -111,7 +112,7 @@ public class CustomerTest {
     @Test
     public void testProvideProduct__NotInStore(){
         frank.addAccount( creditCard );
-        frank.receiveProduct( lotr, AccountType.CREDITCARD );
+        frank.receiveProduct( lotr, AccountType.CREDITCARD, "1234" );
         Product providedProduct = frank.provideProduct( ofotcn, AccountType.CREDITCARD );
         assertNull( providedProduct );
     }

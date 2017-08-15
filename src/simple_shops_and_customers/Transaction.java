@@ -15,6 +15,7 @@ public class Transaction {
             int transactionID,
             Customer customer,
             AccountType customerAccount,
+            String pin,
             Shop shop,
             TransactionType transactionType,
             Product product
@@ -34,7 +35,7 @@ public class Transaction {
             Boolean authorised = customer.authorise( customerAccount, product.getRetailPrice() );
             if ( productInStore && authorised ) {
                 Product providedProduct = shop.provideProduct( product );
-                customer.receiveProduct( providedProduct, customerAccount );
+                customer.receiveProduct( providedProduct, customerAccount, pin );
                 this.completed = true;
             }
 

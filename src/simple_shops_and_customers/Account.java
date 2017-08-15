@@ -6,26 +6,36 @@ public class Account {
     private String details;
     private Double balance;
     private Double limit;
+    private int pinHash;
 
     public Account(
         AccountType type,
         String details,
         Double balance,
-        Double limit
-
+        Double limit,
+        String setupPin
     ) {
         this.type = type;
         this.details = details;
         this.balance = balance;
         this.limit = limit;
+        this.pinHash = getHashCode( setupPin );
     }
 
-    public Boolean debit( Double debitAmount ){
-        if ( authorise( debitAmount ) ){
+    public Boolean debit( Double debitAmount, String pin ){
+        if ( authorise( debitAmount ) && checkPin( pin ) ){
             this.balance -= debitAmount;
             return true;
         }
         return false;
+    }
+
+    private int getHashCode( String input ){
+        return input.hashCode();
+    }
+
+    private Boolean checkPin( String pin ){
+        return ( getHashCode( pin ) == this.pinHash );
     }
 
     public void credit( Double creditAmount ){
@@ -37,8 +47,11 @@ public class Account {
         return !overLimit;
     }
 
-    public Double getBalance(){
-        return this.balance;
+    public Double getBalance( String pin ){
+        if ( checkPin( pin ) ) {
+            return this.balance;
+        }
+        return null;
     }
 
     public AccountType getType(){
