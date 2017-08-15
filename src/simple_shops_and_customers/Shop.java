@@ -64,4 +64,8 @@ public class Shop {
         return this.products.productInStore( product );
     }
 
+    public Double getTotal(){
+        return this.current + this.sales + this.refunds;
+    }
+
 }

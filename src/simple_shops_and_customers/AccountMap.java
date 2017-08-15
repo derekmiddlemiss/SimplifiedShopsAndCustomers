@@ -18,10 +18,6 @@ public class AccountMap {
         return this.store.containsKey( accountType );
     }
 
-    public Double getBalance( AccountType accountType ){
-        return this.store.get( accountType ).getBalance();
-    }
-
     public Account getAccount( AccountType accountType ){
         return this.store.get( accountType );
     }

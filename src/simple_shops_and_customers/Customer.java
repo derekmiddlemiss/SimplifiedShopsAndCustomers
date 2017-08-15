@@ -26,14 +26,19 @@ public class Customer {
     }
 
     public void receiveProduct(Product product, AccountType accountType) {
-        this.products.storeProduct(product);
-        this.accounts.getAccount(accountType).debit(product.getRetailPrice());
+        if ( product != null ) {
+            this.products.storeProduct(product);
+            this.accounts.getAccount(accountType).debit(product.getRetailPrice());
+        }
     }
 
     public Product provideProduct(Product product, AccountType accountType) {
-        Product fetchProduct = this.products.fetchProduct(product);
-        this.accounts.getAccount( accountType ).credit(product.getRetailPrice());
-        return fetchProduct;
+        if ( product != null ) {
+            Product fetchProduct = this.products.fetchProduct(product);
+            this.accounts.getAccount(accountType).credit(product.getRetailPrice());
+            return fetchProduct;
+        }
+        return null;
     }
 
     public Boolean authorise( AccountType accountType, Double amount ){
@@ -44,6 +49,10 @@ public class Customer {
         return this.products.productInStore( product );
     }
 
+    public int numberProductsInStore(){
+        return this.products.numberProductsInStore();
+    }
+
     public void addAccount( Account account ){
         this.accounts.addAccount( account );
     }
@@ -51,6 +60,8 @@ public class Customer {
     public Double getBalance( AccountType accountType ){
         return this.accounts.getAccount( accountType ).getBalance();
     }
+
+
 
 }
 
