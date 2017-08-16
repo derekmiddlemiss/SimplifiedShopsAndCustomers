@@ -1,5 +1,8 @@
 package simple_shops_and_customers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Shop {
 
     private int shopID;
@@ -81,19 +84,28 @@ public class Shop {
     }
 
     public void receiveProduct( Product product ){
-        this.products.storeProduct( product );
-        this.refunds -= product.getRetailPrice();
+        if ( product != null ) {
+            this.products.storeProduct(product);
+            this.refunds -= product.getRetailPrice();
+        }
     }
 
     public Product provideProduct( Product product ){
-        Product fetchProduct = this.products.fetchProduct( product );
-        this.sales += product.getRetailPrice();
-        return fetchProduct;
+        if ( product != null ) {
+            Product fetchProduct = this.products.fetchProduct(product);
+            if ( fetchProduct != null ) {
+                this.sales += fetchProduct.getRetailPrice();
+            }
+            return fetchProduct;
+        }
+        return null;
     }
 
     public void restockProduct( Product product ){
-        this.products.storeProduct( product );
-        this.current -= product.getWholesalePrice();
+        if ( product != null ) {
+            this.products.storeProduct(product);
+            this.current -= product.getWholesalePrice();
+        }
     }
 
     public Boolean productInStore( Product product ){
@@ -102,6 +114,22 @@ public class Shop {
 
     public Double getTotal(){
         return this.current + this.sales + this.refunds;
+    }
+
+    public ArrayList< Transaction > findTransactionsByProductID( String productID ){
+        return this.transactions.findTransactionsByProductID( productID );
+    }
+
+    public ArrayList< Transaction > findTransactionsByCustomerID( int customerID ){
+        return this.transactions.findTransactionsByCustomerID( customerID );
+    }
+
+    public HashMap< String, Integer > getSalesReportByProductID(){
+        return this.transactions.getSalesReportByProductID();
+    }
+
+    public HashMap< String, Integer > getRefundReportByProductID(){
+        return this.transactions.getRefundReportByProductID();
     }
 
 }

@@ -30,7 +30,10 @@ public class Transaction {
         if ( transactionType == TransactionType.SALE ){
 
             Boolean productInStore = shop.productInStore( product );
-            Boolean authorised = customer.authorise( customerAccount, product.getRetailPrice() );
+            Boolean authorised = false;
+            if ( customer.hasAccount( customerAccount ) ) {
+                authorised = customer.authorise(customerAccount, product.getRetailPrice());
+            }
             if ( productInStore && authorised ) {
                 Product providedProduct = shop.provideProduct( product );
                 customer.receiveProduct( providedProduct, customerAccount, pin );
@@ -41,9 +44,11 @@ public class Transaction {
 
             Boolean productInHouse = customer.productInStore( product );
             if ( productInHouse ) {
-                Product providedProduct = customer.provideProduct( product, customerAccount );
-                shop.receiveProduct( providedProduct );
-                this.completed = true;
+                if ( customer.hasAccount( customerAccount ) ) {
+                    Product providedProduct = customer.provideProduct(product, customerAccount);
+                    shop.receiveProduct(providedProduct);
+                    this.completed = true;
+                }
             }
 
 

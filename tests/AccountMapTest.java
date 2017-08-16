@@ -30,7 +30,7 @@ public class AccountMapTest {
     }
 
     @Test
-    public void testAddAccount(){
+    public void testAddAccountAndHasAccount(){
         accounts.addAccount( creditCard );
         assertTrue( accounts.hasAccountType( AccountType.CREDITCARD ) );
     }

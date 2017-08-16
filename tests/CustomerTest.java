@@ -49,9 +49,14 @@ public class CustomerTest {
     }
 
     @Test
+    public void testHasAccount__False(){
+        assertFalse( frank.hasAccount( AccountType.CREDITCARD ) );
+    }
+
+    @Test
     public void testAddAccount(){
         frank.addAccount( creditCard );
-        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
+        assertTrue( frank.hasAccount( AccountType.CREDITCARD ) );
     }
 
     @Test

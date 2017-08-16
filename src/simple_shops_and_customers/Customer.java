@@ -35,8 +35,10 @@ public class Customer {
     public Product provideProduct(Product product, AccountType accountType) {
         if ( product != null ) {
             Product fetchProduct = this.products.fetchProduct(product);
-            this.accounts.getAccount(accountType).credit(product.getRetailPrice());
-            return fetchProduct;
+            if ( fetchProduct != null ) {
+                this.accounts.getAccount(accountType).credit(fetchProduct.getRetailPrice());
+                return fetchProduct;
+            }
         }
         return null;
     }
@@ -61,7 +63,9 @@ public class Customer {
         return this.accounts.getAccount( accountType ).getBalance( pin );
     }
 
-
+    public Boolean hasAccount( AccountType accountType ){
+        return this.accounts.hasAccountType( accountType );
+    }
 
 }
 
