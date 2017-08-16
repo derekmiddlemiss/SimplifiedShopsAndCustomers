@@ -49,14 +49,22 @@ public class TransactionTest {
         assertTrue( bookShop.productInStore( lotr ) );
         assertEquals( 992.0, bookShop.getCurrent(), 0.001 );
 
+        int transactionID = 1;
+        Customer customer = frank;
+        AccountType accountType = AccountType.CREDITCARD;
+        String pin = "1234";
+        Shop shop = bookShop;
+        TransactionType transactionType = TransactionType.SALE;
+        Product product = lotr;
         Transaction lotrToFrank = new Transaction(
-                1,
-                frank,
-                AccountType.CREDITCARD,
-                "1234",
-                bookShop,
-                TransactionType.SALE,
-                lotr);
+                transactionID,
+                customer,
+                accountType,
+                pin,
+                shop,
+                transactionType,
+                product
+        );
 
         assertTrue( frank.productInStore( lotr ) );
         assertFalse( bookShop.productInStore( lotr ) );
@@ -66,27 +74,44 @@ public class TransactionTest {
 
     @Test
     public void returnLotrToShop(){
+
+        int transactionID = 1;
+        Customer customer = frank;
+        AccountType accountType = AccountType.CREDITCARD;
+        String pin = "1234";
+        Shop shop = bookShop;
+        TransactionType transactionType = TransactionType.SALE;
+        Product product = lotr;
         Transaction lotrToFrank = new Transaction(
-                1,
-                frank,
-                AccountType.CREDITCARD,
-                "1234",
-                bookShop,
-                TransactionType.SALE,
-                lotr
+                transactionID,
+                customer,
+                accountType,
+                pin,
+                shop,
+                transactionType,
+                product
         );
+
         assertTrue( frank.productInStore( lotr ) );
         assertFalse( bookShop.productInStore( lotr ) );
 
+        transactionID = 2;
+        customer = frank;
+        accountType = AccountType.CREDITCARD;
+        pin = "1234";
+        shop = bookShop;
+        transactionType = TransactionType.REFUND;
+        product = lotr;
         Transaction lotrToShop = new Transaction(
-                2,
-                frank,
-                AccountType.CREDITCARD,
-                "1234",
-                bookShop,
-                TransactionType.REFUND,
-                lotr
+                transactionID,
+                customer,
+                accountType,
+                pin,
+                shop,
+                transactionType,
+                product
         );
+
         assertFalse( frank.productInStore( lotr ) );
         assertTrue( bookShop.productInStore( lotr ) );
         assertEquals( 12.00, bookShop.getSales(), 0.001 );

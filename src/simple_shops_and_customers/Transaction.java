@@ -63,19 +63,19 @@ public class Transaction {
         return this.customerAccount;
     }
 
-    private TransactionType getType(){
+    public TransactionType getType(){
         return this.type;
     }
 
-    private String getProductIdentifier(){
+    public String getProductIdentifier(){
         return this.productIdentifier;
     }
 
-    private Double getAmount(){
+    public Double getAmount(){
         return this.amount;
     }
 
-    private Boolean getCompleted(){
+    public Boolean getCompleted(){
         return this.completed;
     }
 }

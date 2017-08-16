@@ -58,4 +58,22 @@ public class ShopTest {
         assertEquals( -12.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001 );
         assertEquals( 1, bookShop.getNumberOfTransactions() );
     }
+
+    @Test
+    public void testFrankReturnLotR(){
+        bookShop.sellProduct( lotr, frank, AccountType.CREDITCARD, "1234" );
+        assertTrue( frank.productInStore( lotr ) );
+        assertFalse( bookShop.productInStore( lotr ) );
+
+        bookShop.refundProduct( lotr, frank, AccountType.CREDITCARD, "1234" );
+        assertFalse( frank.productInStore( lotr ) );
+        assertTrue( bookShop.productInStore( lotr ) );
+        assertEquals( 2, bookShop.getNumberOfTransactions() );
+        assertEquals( 12.00, bookShop.getSales(), 0.001);
+        assertEquals( -12.00, bookShop.getRefunds(), 0.001);
+        assertEquals( 0.00, frank.getBalance( AccountType.CREDITCARD, "1234" ), 0.001);
+    }
+
+
+
 }
