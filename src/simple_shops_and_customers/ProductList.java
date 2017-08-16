@@ -1,6 +1,7 @@
 package simple_shops_and_customers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProductList {
 
@@ -42,6 +43,25 @@ public class ProductList {
 
     public int numberProductsInStore(){
         return this.store.size();
+    }
+
+    public HashMap< String, Integer > getStockReport(){
+
+        HashMap< String, Integer > resultMap = new HashMap<>();
+
+        for ( Product product : this.store ) {
+            String productID = product.getIdentifier();
+
+            if ( resultMap.get( productID ) == null ){
+                resultMap.put( productID, 1 );
+            } else {
+                resultMap.put( productID, resultMap.get( productID ) + 1 );
+            }
+
+        }
+
+        return resultMap;
+
     }
 
 }

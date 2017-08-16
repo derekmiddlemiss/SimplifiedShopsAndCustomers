@@ -2,12 +2,15 @@ import org.junit.Before;
 import org.junit.Test;
 import simple_shops_and_customers.*;
 
+import java.util.HashMap;
+
 import static org.junit.Assert.*;
 
 public class ProductListTest {
 
     private Product taleTwoCities1;
     private Product taleTwoCities2;
+    private Product ofotcn;
     private ProductList bookStore;
 
     @Before
@@ -23,6 +26,12 @@ public class ProductListTest {
                 10.99,
                 12.99,
                 "Unabridged copy of A Tale of Two Cities by Charles Dickens"
+        );
+        ofotcn = new Product(
+                "OneFlewOverTheCuckoosNest345672",
+                6.00,
+                9.00,
+                "Unabridged copy of One Flew Over the Cuckoos Nest by Ken Kesey"
         );
         bookStore = new ProductList();
     }
@@ -86,5 +95,18 @@ public class ProductListTest {
         assertNull( inspectProduct );
         assertEquals( 1, bookStore.numberProductsInStore() );
     }
+
+    @Test
+    public void testGetStockReport(){
+        bookStore.storeProduct( taleTwoCities1 );
+        bookStore.storeProduct( taleTwoCities2 );
+        bookStore.storeProduct( ofotcn );
+        HashMap< String, Integer > results = bookStore.getStockReport();
+        Integer expected = 2;
+        assertEquals( expected, results.get( taleTwoCities1.getIdentifier() ) );
+        expected = 1;
+        assertEquals( expected, results.get( ofotcn.getIdentifier() ) );
+    }
+
 
 }
