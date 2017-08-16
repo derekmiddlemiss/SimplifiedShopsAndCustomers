@@ -57,9 +57,10 @@ public class TransactionMap {
 
         for ( Transaction transaction : this.store.values() ){
             Boolean isASale = ( transaction.getType() == TransactionType.SALE );
+            Boolean completed = transaction.getCompleted();
             String productID = transaction.getProductIdentifier();
 
-            if ( isASale ) {
+            if ( isASale && completed ) {
 
                 if ( resultMap.get( productID ) == null ){
                     resultMap.put( productID, 1 );
@@ -79,10 +80,11 @@ public class TransactionMap {
         HashMap< String, Integer > resultMap = new HashMap<>();
 
         for ( Transaction transaction : this.store.values() ){
-            Boolean isARefund = ( transaction.getType() == TransactionType.SALE );
+            Boolean isARefund = ( transaction.getType() == TransactionType.REFUND );
+            Boolean completed = transaction.getCompleted();
             String productID = transaction.getProductIdentifier();
 
-            if ( isARefund ) {
+            if ( isARefund && completed ) {
 
                 if ( resultMap.get( productID ) == null ){
                     resultMap.put( productID, 1 );
